@@ -21,6 +21,7 @@ var rangeStruct counter.Range
 
 func createShortURL(writer http.ResponseWriter, request *http.Request) {
 
+	return
 }
 
 func getFullURL(writer http.ResponseWriter, request *http.Request) {
