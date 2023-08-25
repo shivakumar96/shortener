@@ -1,0 +1,22 @@
+# Server configurations
+server:
+  host: "localhost"
+  port: 8100
+
+# counter configurations
+counter:
+  host: "localhost"
+  port: 8200
+  maxcount: 5
+  ranges: 1000
+
+# worked node deatils
+worker:
+  host: "localhost"
+  port: 8400
+
+# Database credentials
+database:
+  user: "admin"
+  pass: "url-shortner"
+  dbname: "urlshortner"
