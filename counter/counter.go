@@ -51,6 +51,7 @@ func joinMethod(writer http.ResponseWriter, request *http.Request) {
 	err := json.NewEncoder(writer).Encode(worker)
 	if err != nil {
 		log.Println(err)
+		writer.WriteHeader(http.StatusInternalServerError)
 	}
 }
 
@@ -75,6 +76,7 @@ func getRange(writer http.ResponseWriter, request *http.Request) {
 	err = json.NewEncoder(writer).Encode(ran)
 	if err != nil {
 		log.Println(err)
+		writer.WriteHeader(http.StatusInternalServerError)
 	}
 
 }

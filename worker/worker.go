@@ -18,13 +18,42 @@ import (
 var mutex sync.Mutex
 var id int
 var rangeStruct counter.Range
+var currentCount int
+
+type shortURLStruct struct {
+	ShortURL string `json:"shortURL"`
+}
+
+type LongURLStruct struct {
+	LongURL string `json:"longURL"`
+}
 
 func createShortURL(writer http.ResponseWriter, request *http.Request) {
+	writer.Header().Set("Content-Type", "application/json")
+	log.Println("create request")
+	mutex.Lock()
+	uniqueNum := currentCount
+	currentCount++
+	if currentCount >= rangeStruct.EndRange {
+		go initilazeWorker()
+	} // reinitialize the server
+	mutex.Unlock()
+	shortURl := utils.ConvertIntToB64(uniqueNum)
+	log.Println(shortURl)
 
-	return
+	var sURl = shortURLStruct{ShortURL: shortURl}
+
+	err := json.NewEncoder(writer).Encode(&sURl)
+	if err != nil {
+		log.Println(err)
+		writer.WriteHeader(http.StatusInternalServerError)
+	}
+
 }
 
 func getFullURL(writer http.ResponseWriter, request *http.Request) {
+	writer.Header().Set("Content-Type", "application/json")
+	log.Println("get full url request")
 
 }
 
@@ -70,6 +99,10 @@ func initilazeWorker() {
 	log.Println(rangeStruct)
 	mutex.Unlock()
 
+	//set the current range // locaking is not necessary during initialization
+	mutex.Lock()
+	currentCount = rangeStruct.StartRange + 1
+	mutex.Unlock()
 	log.Println("worker initilaiztion completed")
 
 }
