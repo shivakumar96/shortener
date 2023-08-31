@@ -39,6 +39,8 @@ func GetDB() *gorm.DB {
 }
 
 func AddURL(record *Tiny2LongURL) *Tiny2LongURL {
+	defer mutex.Unlock()
+	mutex.Lock()
 	result := db.Create(record)
 	if result.RowsAffected == 0 {
 		return nil
@@ -47,6 +49,8 @@ func AddURL(record *Tiny2LongURL) *Tiny2LongURL {
 }
 
 func GetFullURL(tinyurl string) *Tiny2LongURL {
+	defer mutex.Lock()
+	mutex.Lock()
 	var url Tiny2LongURL
 	db.Where("tinyurl = ?", tinyurl).Find(&url)
 	return &url

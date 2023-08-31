@@ -11,7 +11,9 @@ import (
 	"time"
 
 	"github.com/gorilla/mux"
+	"gorm.io/gorm"
 	"url-shortner.com/backend/counter"
+	"url-shortner.com/backend/db"
 	"url-shortner.com/backend/utils"
 )
 
@@ -19,6 +21,7 @@ var mutex sync.Mutex
 var id int
 var rangeStruct counter.Range
 var currentCount int
+var dbRef *gorm.DB
 
 type shortURLStruct struct {
 	ShortURL string `json:"shortURL"`
@@ -35,15 +38,29 @@ func createShortURL(writer http.ResponseWriter, request *http.Request) {
 	uniqueNum := currentCount
 	currentCount++
 	if currentCount >= rangeStruct.EndRange {
+		mutex.Unlock()
+		writer.WriteHeader(http.StatusInternalServerError)
 		go initilazeWorker()
+		return
 	} // reinitialize the server
+
 	mutex.Unlock()
 	shortURl := utils.ConvertIntToB64(uniqueNum)
 	log.Println(shortURl)
 
-	var sURl = shortURLStruct{ShortURL: shortURl}
+	var urls db.Tiny2LongURL
 
-	err := json.NewEncoder(writer).Encode(&sURl)
+	urls.Tinyurl = shortURl
+	urls.Longurl = longURL
+
+	// add it to DB
+	isurlPresntinDB := db.GetFullURL(shortURl)
+	if isurlPresntinDB == nil {
+		copyOfUrls := urls
+		go db.AddURL(&copyOfUrls)
+	}
+
+	err := json.NewEncoder(writer).Encode(&urls)
 	if err != nil {
 		log.Println(err)
 		writer.WriteHeader(http.StatusInternalServerError)
@@ -54,6 +71,8 @@ func createShortURL(writer http.ResponseWriter, request *http.Request) {
 func getFullURL(writer http.ResponseWriter, request *http.Request) {
 	writer.Header().Set("Content-Type", "application/json")
 	log.Println("get full url request")
+
+	shortURL
 
 }
 
@@ -104,6 +123,10 @@ func initilazeWorker() {
 	currentCount = rangeStruct.StartRange + 1
 	mutex.Unlock()
 	log.Println("worker initilaiztion completed")
+
+	//setup db connection
+	db.ConnectToDB()
+	dbRef = db.GetDB()
 
 }
 

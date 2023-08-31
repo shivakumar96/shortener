@@ -2,7 +2,7 @@ package utils
 
 import (
 	"os"
-	
+
 	"gopkg.in/yaml.v2"
 )
 
@@ -14,8 +14,8 @@ type Config struct {
 	Counter struct {
 		Port     string `yaml:"port"`
 		Host     string `yaml:"host"`
-		MaxCount int    `yaml:maxcount`
-		Ranges   int    `yaml:ranges`
+		MaxCount int    `yaml:"maxcount"`
+		Ranges   int    `yaml:"ranges"`
 	} `yaml:"counter"`
 	Worker struct {
 		Port string `yaml:"port"`
@@ -37,6 +37,6 @@ func ReadConfig() (*Config, error) {
 	defer f.Close()
 	var config Config
 	decoder := yaml.NewDecoder(f)
-	err = decoder.Decode(&config)
+	decoder.Decode(&config)
 	return &config, nil
 }
