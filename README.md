@@ -1,7 +1,7 @@
 # **URL-Shortener**
 
 ## Golang based Micro service application project:
-This is a Full Stack project developed using API REST based microservices architecture devloped using Golang and React, MySQL
+ A Full-Stack project developed using API REST-based microservices architecture created using Golang, ReactJS, and MySQL.
 
 ## Requirements:
 - Golang  [here](https://go.dev/doc/install)
