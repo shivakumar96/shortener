@@ -14,7 +14,7 @@ This is a Full Stack project developed using API REST based microservices archit
 - MysQL Database
 
 Refer pom.xml for dependencies.
-### Note: This is a MVP, there are scopes to impove this project. this is version 1.0
+### Note: This Project is an MVP, and there are scopes to improve this Project. The is version 1.0
 
 ## Architecture
 ![Alt text](https://github.com/shivakumar96/url-shortener/blob/main/architecture/tinyURL_architecture.png)
