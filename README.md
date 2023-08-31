@@ -1,6 +1,6 @@
 # **URL-Shortener**
 
-## Golang based Micro service application project:
+## Golang based Microservice application project:
  A Full-Stack project developed using API REST-based microservices architecture created using Golang, ReactJS, and MySQL.
 
 ## Requirements:
