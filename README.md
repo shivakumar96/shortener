@@ -11,7 +11,7 @@
     - Mysql driver
 
 - ReactJS
-- MysQL Database
+- MysQL Database (Docker container)
 
 Refer pom.xml for dependencies.
 ### Note: This Project is an MVP, and there are scopes to improve this Project. The is version 1.0
