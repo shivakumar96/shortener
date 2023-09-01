@@ -1,26 +1,44 @@
 package main
 
 import (
-	"fmt"
+	"log"
 	"sync"
+	"time"
 
-	"url-shortner.com/backend/db"
+	gateway "url-shortner.com/backend/API-Gateway"
+	"url-shortner.com/backend/counter"
+	"url-shortner.com/backend/utils"
+	"url-shortner.com/backend/worker"
 )
 
 var wg sync.WaitGroup
+var config *utils.Config
 
 func main() {
-	/*	wg.Add(1)
+	config, _ = utils.ReadConfig()
+	wg.Add(1 + config.Worker.Count)
+	go func() {
+		counter.StartCounterServer()
+		wg.Done()
+	}()
+
+	for i := 0; i < config.Worker.Count; i++ {
+		log.Println("staring worker")
+		time.Sleep(time.Second * 5)
+
 		go func() {
-			counter.StartCounterServer()
+			worker.WorkerEntry()
 			wg.Done()
 		}()
-		worker.WorkerEntry()
-		wg.Wait()
-	*/
-	db.ConnectToDB()
-	url := db.Tiny2LongURL{Tinyurl: "abc", Longurl: "longurl"}
-	db.AddURL(&url)
+	}
 
-	fmt.Println(db.GetFullURL("abc"))
+	log.Println("staring gateway")
+	gateway.StartAPIGateway()
+	wg.Wait()
+
+	//db.ConnectToDB()
+	//url := db.Tiny2LongURL{Tinyurl: "abc", Longurl: "longurl"}
+	//db.AddURLIfAbsent(&url)
+
+	//fmt.Println(db.GetFullURL("abc"))
 }

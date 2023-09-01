@@ -99,7 +99,7 @@ func StartCounterServer() {
 	log.Printf("counter configuration: %v", string(conf))
 
 	router := mux.NewRouter()
-	router.HandleFunc("/join", joinMethod).Methods("GET")
+	router.HandleFunc("/join", joinMethod).Methods("POST")
 	router.HandleFunc("/range/{workedId}", getRange).Methods("GET")
 
 	counterURL := config.Counter.Host + ":" + config.Counter.Port

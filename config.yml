@@ -14,6 +14,7 @@ counter:
 worker:
   host: "localhost"
   port: 8400
+  count: 2
 
 # Database credentials
 database:

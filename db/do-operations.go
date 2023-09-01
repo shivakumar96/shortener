@@ -6,6 +6,7 @@ import (
 
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
+	"gorm.io/gorm/clause"
 )
 
 var mutex sync.Mutex
@@ -38,20 +39,36 @@ func GetDB() *gorm.DB {
 	return db
 }
 
-func AddURL(record *Tiny2LongURL) *Tiny2LongURL {
+func AddURLIfAbsent(record *Tiny2LongURL) *Tiny2LongURL {
 	defer mutex.Unlock()
 	mutex.Lock()
-	result := db.Create(record)
+	result := db.Clauses(clause.Insert{Modifier: "IGNORE"}).Create(record)
 	if result.RowsAffected == 0 {
 		return nil
 	}
 	return record
 }
 
-func GetFullURL(tinyurl string) *Tiny2LongURL {
-	defer mutex.Lock()
+func GetFullURL(tinyurl string) (*Tiny2LongURL, error) {
+	defer mutex.Unlock()
 	mutex.Lock()
 	var url Tiny2LongURL
-	db.Where("tinyurl = ?", tinyurl).Find(&url)
-	return &url
+	result := db.Where("tinyurl = ?", tinyurl).First(&url)
+	log.Println(result)
+	if result.RowsAffected == 0 {
+		return nil, gorm.ErrRecordNotFound
+	}
+	return &url, nil
+}
+
+func GetShortURL(longurl string) (*Tiny2LongURL, error) {
+	defer mutex.Unlock()
+	mutex.Lock()
+	var url Tiny2LongURL
+	result := db.Where("longurl = ?", longurl).First(&url)
+	log.Println(result)
+	if result.RowsAffected == 0 {
+		return nil, gorm.ErrRecordNotFound
+	}
+	return &url, nil
 }

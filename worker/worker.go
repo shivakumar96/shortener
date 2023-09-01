@@ -34,6 +34,28 @@ type LongURLStruct struct {
 func createShortURL(writer http.ResponseWriter, request *http.Request) {
 	writer.Header().Set("Content-Type", "application/json")
 	log.Println("create request")
+
+	var longURLVal LongURLStruct
+	//geth the short url
+	err := json.NewDecoder(request.Body).Decode(&longURLVal)
+	if err != nil {
+		log.Println(err)
+		writer.WriteHeader(http.StatusInternalServerError)
+	}
+	longURL := longURLVal.LongURL
+	log.Println(longURL)
+	if len(longURL) == 0 {
+		writer.WriteHeader(http.StatusBadRequest)
+		return
+	}
+
+	tempurl, _ := db.GetShortURL(longURL)
+
+	if tempurl != nil {
+		json.NewEncoder(writer).Encode(tempurl)
+		return
+	}
+
 	mutex.Lock()
 	uniqueNum := currentCount
 	currentCount++
@@ -53,14 +75,10 @@ func createShortURL(writer http.ResponseWriter, request *http.Request) {
 	urls.Tinyurl = shortURl
 	urls.Longurl = longURL
 
-	// add it to DB
-	isurlPresntinDB := db.GetFullURL(shortURl)
-	if isurlPresntinDB == nil {
-		copyOfUrls := urls
-		go db.AddURL(&copyOfUrls)
-	}
+	// add it to DB if not found
+	go db.AddURLIfAbsent(&urls)
 
-	err := json.NewEncoder(writer).Encode(&urls)
+	err = json.NewEncoder(writer).Encode(&urls)
 	if err != nil {
 		log.Println(err)
 		writer.WriteHeader(http.StatusInternalServerError)
@@ -72,8 +90,21 @@ func getFullURL(writer http.ResponseWriter, request *http.Request) {
 	writer.Header().Set("Content-Type", "application/json")
 	log.Println("get full url request")
 
-	shortURL
+	shortURL := mux.Vars(request)["shortURL"]
+	urls, err := db.GetFullURL(shortURL)
+	log.Println(urls)
 
+	if err != nil {
+		log.Println(err)
+		writer.WriteHeader(http.StatusNotFound)
+		return
+	}
+	err = json.NewEncoder(writer).Encode(urls)
+
+	if err != nil {
+		log.Println(err)
+		writer.WriteHeader(http.StatusInternalServerError)
+	}
 }
 
 func shutdown(message string) {
@@ -102,7 +133,7 @@ func initilazeWorker() {
 
 	// join the cluter
 	joinURL := counterURL + "/join"
-	joinRequest, _ := http.NewRequest(http.MethodGet, joinURL, nil)
+	joinRequest, _ := http.NewRequest(http.MethodPost, joinURL, nil)
 	var worker counter.WorkedId
 	request(joinRequest, client, &worker)
 	mutex.Lock()
@@ -134,8 +165,8 @@ func WorkerEntry() {
 	initilazeWorker()
 
 	router := mux.NewRouter()
-	router.HandleFunc("/tinyurl/{val}", getFullURL).Methods("GET")
-	router.HandleFunc("/tinyurl", createShortURL).Methods("Post")
+	router.HandleFunc("/tinyurl/{shortURL}", getFullURL).Methods("GET")
+	router.HandleFunc("/tinyurl", createShortURL).Methods("POST")
 
 	config, _ := utils.ReadConfig()
 	port, _ := strconv.Atoi(config.Worker.Port)

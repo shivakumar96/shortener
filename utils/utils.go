@@ -18,8 +18,9 @@ type Config struct {
 		Ranges   int    `yaml:"ranges"`
 	} `yaml:"counter"`
 	Worker struct {
-		Port string `yaml:"port"`
-		Host string `yaml:"host"`
+		Port  string `yaml:"port"`
+		Host  string `yaml:"host"`
+		Count int    `yaml:"count"`
 	} `yaml:"worker"`
 	Database struct {
 		Username string `yaml:"user"`
