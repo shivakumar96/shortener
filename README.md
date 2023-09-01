@@ -14,7 +14,10 @@
 - MysQL Database (Docker container)
 
 ### Note: This Project is an MVP, and there are scopes to improve this Project. 
-### cuttent version is 1.0
+### This repository contains the backend code the URL-shortener project, the current version of the backend is v1.0,
+### url-shortener-ui: UI for URL-shortener project
+The frontend code for the URL-shortener Project can be found in the repository mentioned in the below link  <br>
+[https://github.com/shivakumar96/url-shortener-ui](https://github.com/shivakumar96/url-shortener-ui)
 
 ## Architecture
 
@@ -23,52 +26,52 @@
 # How to set up ?
 
 ## Clone Repository from GitHub
-Run the below command to clone code from github
+Run the below command to clone code from GitHub
 ```
 git clone https://github.com/shivakumar96/url-shortener.git
 ```
 
 ## build the code (Optional)
-Executable file 'backend' is present in the executables directory, of not run the below command.
+The executable file 'backend' is in the executables directory. If not, run the below command.
 ```
 go build -o ./executables
 ```
 
 ## Install docker and docker-compose (Optional)
-This project will use the Mysql docker image for db setup. <br>
-Run the below command from the url-shortner directory
+This project will use the Mysql docker image for the DB setup. <br>
+Run the below command from the url-shortener directory
 ```
 ./run.sh --db setup
 ```
 
 ## Run MySQL DB container
-To run the MySQL DB, run the below command from the url-shortner directory
+To run the MySQL DB, run the below command from the url-shortener directory
 ```
 ./run.sh --db up
 ```
 
-To stop the MySQL DB, run the below command from the url-shortner directory
+To stop the MySQL DB, run the below command from the url-shortener directory
 ```
 ./run.sh --db down
 ```
 
 ## Run Micro services
-To run the API-Gateway microservice, run the below command from the url-shortner directory
+To run the API-Gateway microservice, run the below command from the url-shortener directory
 ```
 ./run.sh --urlserver gateway
 ```
 
-To run the Counter microservice, run the below command from the url-shortner directory
+To run the Counter microservice, run the below command from the url-shortener directory
 ```
 ./run.sh --urlserver counter
 ```
 
-To run the Worker microservice, run the below command from the url-shortner directory
+To run the Worker microservice, run the below command from the url-shortener directory
 ```
 ./run.sh --urlserver worker
 ``` 
 
-To run all microservices, run the below command from the url-shortner directory
+To run all microservices, run the below command from the url-shortener directory
 ```
 ./run.sh --urlserver all
 ``` 
