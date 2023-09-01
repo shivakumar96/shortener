@@ -18,6 +18,7 @@
 ### url-shortener-ui: UI for URL-shortener Project
 The frontend code for the URL-shortener Project can be found in the repository mentioned in the below link  <br>
 [https://github.com/shivakumar96/url-shortener-ui](https://github.com/shivakumar96/url-shortener-ui)
+ 
 
 ## Architecture
 
@@ -54,6 +55,10 @@ To stop the MySQL DB, run the below command from the url-shortener directory
 ```
 ./run.sh --db down
 ```
+
+## Modify Configuration (Optional)
+Update the configuration file ```config.yml``` <br>
+If DB configurations are modified, the same values should be reflected in ``` db-configuration/mysql-docker-compose.yaml```
 
 ## Run Micro services
 To run the API-Gateway microservice, run the below command from the url-shortener directory
