@@ -4,7 +4,7 @@
  A Full-Stack project developed using API REST-based microservices architecture created using Golang, ReactJS, and MySQL.
 
 ## Requirements:
-- Golang  [here](https://go.dev/doc/install)
+- Golang, Install it from here [here](https://go.dev/doc/install)
 - Modules/libraries :
     - Gorilla Mux 
     - Gorm
