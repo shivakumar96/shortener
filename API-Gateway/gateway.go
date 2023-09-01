@@ -59,8 +59,6 @@ func createShortURL(writer http.ResponseWriter, request *http.Request) {
 	var buf bytes.Buffer
 	json.NewEncoder(&buf).Encode(&longURLReqBody)
 
-	log.Println(buf)
-
 	workerRequest, _ := http.NewRequest(http.MethodPost, workerURL, &buf)
 	var client = &http.Client{Timeout: time.Second * 40}
 	resp, err := client.Do(workerRequest)

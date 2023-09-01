@@ -19,5 +19,5 @@ worker:
 # Database credentials
 database:
   user: "admin"
-  pass: "url-shortner"
-  dbname: "urlshortner"
+  pass: "password"
+  dbname: "tinyurl"
