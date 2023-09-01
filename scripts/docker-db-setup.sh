@@ -26,4 +26,4 @@ case "$OSTYPE" in
             exit 1;;
 esac
 
-docker-compose -f db-configuration/mysql-docker-compose.yaml  up -d
+

@@ -28,7 +28,8 @@ func ConnectToDB() {
 	}
 	//dsn := "admin:password@/tinyurl?"
 	conf, _ = utils.ReadConfig()
-	var dsn = conf.Database.Username + ":" + conf.Database.Password + "@/" + conf.Database.DBName
+	var dsn = conf.Database.Username + ":" + conf.Database.Password + "@tcp(" + conf.Database.Host + ":" + conf.Database.Port + ")/" + conf.Database.DBName
+	log.Println("DB connectiong to", dsn)
 	database, err := gorm.Open(mysql.Open(dsn), &gorm.Config{})
 	if err != nil {
 		log.Fatal("failed to connect DB")
