@@ -49,7 +49,7 @@ To run the MySQL DB, run the below command from the url-shortner directory
 
 To stop the MySQL DB, run the below command from the url-shortner directory
 ```
-./run.sh --db up
+./run.sh --db down
 ```
 
 ## Run Micro services
@@ -78,3 +78,6 @@ Run the below command from the url-shortner directory, to get help on how to exe
 ```
 ./run.sh --help
 ``` 
+
+## output
+<img src="https://github.com/shivakumar96/url-shortener/blob/main/architecture/output.png" width="600" height="400">
