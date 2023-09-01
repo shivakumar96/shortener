@@ -1,6 +1,6 @@
 # **URL-Shortener**
 
-## Golang based Microservice application project:
+## Golang based Microservice application:
  A Full-Stack project developed using API REST-based microservices architecture created using Golang, ReactJS, and MySQL.
 
 ## Requirements:
@@ -14,8 +14,8 @@
 - MysQL Database (Docker container)
 
 ### Note: This Project is an MVP, and there are scopes to improve this Project. 
-### This repository contains the backend code the URL-shortener project, the current version of the backend is v1.0,
-### url-shortener-ui: UI for URL-shortener project
+### This repository contains the backend code the URL-shortener project. The current version of the backend is v1.0.
+### url-shortener-ui: UI for URL-shortener Project
 The frontend code for the URL-shortener Project can be found in the repository mentioned in the below link  <br>
 [https://github.com/shivakumar96/url-shortener-ui](https://github.com/shivakumar96/url-shortener-ui)
 
