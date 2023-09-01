@@ -17,6 +17,7 @@ Refer pom.xml for dependencies.
 ### Note: This Project is an MVP, and there are scopes to improve this Project. The is version 1.0
 
 ## Architecture
-![Alt text](https://github.com/shivakumar96/url-shortener/blob/main/architecture/tinyURL_architecture.png | width=100)
+
+<img src="ttps://github.com/shivakumar96/url-shortener/blob/main/architecture/tinyURL_architecture.png" width="150" height="280">
 
 ## How to set up?
