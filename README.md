@@ -18,6 +18,6 @@ Refer pom.xml for dependencies.
 
 ## Architecture
 
-<img src="https://github.com/shivakumar96/url-shortener/blob/main/architecture/tinyURL_architecture.png" width="600" height="1000">
+<img src="https://github.com/shivakumar96/url-shortener/blob/main/architecture/tinyURL_architecture.png" width="600" height="800">
 
 ## How to set up?
