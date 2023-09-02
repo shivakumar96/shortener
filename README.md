@@ -32,6 +32,12 @@ Run the below command to clone code from GitHub
 git clone https://github.com/shivakumar96/url-shortener.git
 ```
 
+## Download Modules 
+Downlod go modules/libraries
+```
+go mod download
+```
+
 ## build the code (Optional)
 The executable file 'backend' is in the executables directory. If not, run the below command.
 ```
